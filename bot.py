@@ -94,6 +94,7 @@ class ModmailBot(commands.Bot):
         logger.info("┴ ┴└─┘─┴┘┴ ┴┴ ┴┴┴─┘")
         logger.info("v%s", __version__)
         logger.info("Authors: kyb3r, fourjr, Taaku18")
+        logger.info("Running modified branch")
         logger.line()
 
         for cog in self.loaded_cogs:
