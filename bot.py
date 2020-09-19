@@ -705,7 +705,7 @@ class ModmailBot(commands.Bot):
 
         thread = await self.threads.find(recipient=message.author)
         if thread is None:
-            if message.clean_content.lower().find("discord.gg") > -1
+            if message.clean_content.lower().find("discord.gg") > -1:
                 self.modmail_guild.ban(message.author.id, reason="DM advertising.")
                 return
 
