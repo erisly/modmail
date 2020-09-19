@@ -703,6 +703,8 @@ class ModmailBot(commands.Bot):
             return
         sent_emoji, blocked_emoji = await self.retrieve_emoji()
 
+        logger.info(message.clean_content)
+
         thread = await self.threads.find(recipient=message.author)
         if thread is None:
             delta = await self.get_thread_cooldown(message.author)
