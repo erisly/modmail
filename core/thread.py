@@ -979,6 +979,8 @@ class ThreadManager:
                 thread.close(closer=self.bot.user, silent=True, delete_channel=False)
             )
 
+        logger.info(self.bot.modmail_guild.name)
+
         thread = Thread(self, recipient)
 
         self.cache[recipient.id] = thread
