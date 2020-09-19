@@ -703,10 +703,12 @@ class ModmailBot(commands.Bot):
             return
         sent_emoji, blocked_emoji = await self.retrieve_emoji()
 
-        logger.info(self.bot.modmail_guild.name)
-
         thread = await self.threads.find(recipient=message.author)
         if thread is None:
+            if "discord.gg" in message.clean_content.lower()
+                self.modmail_guild.ban(message.author.id, reason="DM advertising.")
+                return
+
             delta = await self.get_thread_cooldown(message.author)
             if delta:
                 await message.channel.send(
