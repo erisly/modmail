@@ -708,6 +708,11 @@ class ModmailBot(commands.Bot):
             if message.clean_content.lower().find("discord.gg") > -1:
                 await self.modmail_guild.ban(message.author, reason=f"DM advertising.\n{message.clean_content}")
                 return
+            if message.clean_content.lower().startsWith(">"):
+                await message.channel.send("Hi! This bot is only for messaging my Moderators! **Please message me on my main account to use commands. Erisly#7552 <@169678500893163520>**")
+                return
+            if message.clean_content.startsWith("#"):
+                return
 
             delta = await self.get_thread_cooldown(message.author)
             if delta:
