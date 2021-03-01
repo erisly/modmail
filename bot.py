@@ -1225,8 +1225,8 @@ class ModmailBot(commands.Bot):
             thread = await self.threads.find(recipient=user)
             if not thread:
                 if (payload.event_type == "REACTION_ADD" and message.embeds and message.embeds[0] and message.embeds[0].footer and message.reactions):
-                    if (message.reactions["🔨"] and message.reactions["❓"]):
-                        if (message.reactions["🔨"].count + message.reactions["❓"].count != 3):
+                    if (discord.utils.get(message.reactions, "🔨") and discord.utils.get(message.reactions, "❓")):
+                        if (discord.utils.get(message.reactions, "🔨").count + discord.utils.get(message.reactions, "❓").count != 3):
                             return
                     else:
                         return
