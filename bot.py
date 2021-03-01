@@ -1196,6 +1196,7 @@ class ModmailBot(commands.Bot):
                     if str(reaction) == str("❓"):
                         thread = await self.threads.create(message.author, message=message, category=discord.utils.get(self.guild.channels, id=748877512968241262))
 
+                    sent_emoji, blocked_emoji = await self.retrieve_emoji()
                     if not thread.cancelled:
                         try:
                             await thread.send(message)
