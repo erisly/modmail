@@ -878,7 +878,7 @@ class ModmailBot(commands.Bot):
                 description="React with the following to choose:\n\n❓ **Erisly Bot Help** - I need help using Erisly!\n🔨 **Erisly Server Help** - I need to report something in Erisly's Discord Server!"
             )
             embed.set_footer(
-                text="MID: " + message.id
+                text="MID: " + str(message.id)
             )
             open_message = await message.channel.send(embed=embed)
             self.add_reaction(open_message, "❓")
