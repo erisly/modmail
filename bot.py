@@ -873,7 +873,17 @@ class ModmailBot(commands.Bot):
                 await self.add_reaction(message, blocked_emoji)
                 return await message.channel.send(embed=embed)
 
-            thread = await self.threads.create(message.author, message=message)
+            embed = discord.Embed(
+                title="What type of modmail would you like to create?"
+                description="React with the following to choose:\n\n❓ **Erisly Bot Help** - I need help using Erisly!\n🔨 **Erisly Server Help** - I need to report something in Erisly's Discord Server!"
+            )
+            embed.set_footer(
+                text="MID: " + message.id
+            )
+            open_message = await message.channel.send(embed=embed)
+            self.add_reaction(open_message, "❓")
+            self.add_reaction(open_message, "🔨")
+
         else:
             if self.config["dm_disabled"] == DMDisabled.ALL_THREADS:
                 embed = discord.Embed(
@@ -890,16 +900,6 @@ class ModmailBot(commands.Bot):
                 )
                 await self.add_reaction(message, blocked_emoji)
                 return await message.channel.send(embed=embed)
-
-        if not thread.cancelled:
-            try:
-                await thread.send(message)
-            except Exception:
-                logger.error("Failed to send message:", exc_info=True)
-                await self.add_reaction(message, blocked_emoji)
-            else:
-                await self.add_reaction(message, sent_emoji)
-                self.dispatch("thread_reply", thread, False, message, False, False)
 
     async def get_contexts(self, message, *, cls=commands.Context):
         """
@@ -1185,6 +1185,27 @@ class ModmailBot(commands.Bot):
         if isinstance(channel, discord.DMChannel):
             thread = await self.threads.find(recipient=user)
             if not thread:
+                if (payload.event_type == "REACTION_ADD" and message.embeds and message.embeds[0] and message.embeds[0].footer):
+                    try:
+                        message = await channel.fetch_message(message.embeds[0].footer.text.split()[1])
+                    except (discord.NotFound, discord.Forbidden):
+                        return
+
+                    if str(reaction) == str("🔨"):
+                        thread = await self.threads.create(message.author, message=message, category=discord.utils.find(guild.channels, id=756528885008695377))
+                    if str(reaction) == str("❓"):
+                        thread = await self.threads.create(message.author, message=message, category=discord.utils.find(guild.channels, id=748877512968241262))
+
+                    if not thread.cancelled:
+                        try:
+                            await thread.send(message)
+                        except Exception:
+                            logger.error("Failed to send message:", exc_info=True)
+                            await self.add_reaction(message, blocked_emoji)
+                        else:
+                            await self.add_reaction(message, sent_emoji)
+                            self.dispatch("thread_reply", thread, False, message, False, False)
+
                 return
             if (
                 payload.event_type == "REACTION_ADD"
