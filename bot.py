@@ -1231,8 +1231,8 @@ class ModmailBot(commands.Bot):
                     else:
                         return
 
-                    await message.remove_reaction("🔨")
-                    await message.remove_reaction("❓")
+                    await message.remove_reaction("🔨", self.user)
+                    await message.remove_reaction("❓", self.user)
 
                     try:
                         message = await channel.fetch_message(message.embeds[0].footer.text.split()[1])
