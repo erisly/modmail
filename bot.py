@@ -1224,7 +1224,16 @@ class ModmailBot(commands.Bot):
         if isinstance(channel, discord.DMChannel):
             thread = await self.threads.find(recipient=user)
             if not thread:
-                if (payload.event_type == "REACTION_ADD" and message.embeds and message.embeds[0] and message.embeds[0].footer):
+                if (payload.event_type == "REACTION_ADD" and message.embeds and message.embeds[0] and message.embeds[0].footer and message.reactions):
+                    if (message.reactions["🔨"] and message.reactions["❓"]):
+                        if (message.reactions["🔨"].count + message.reactions["❓"].count != 3):
+                            return
+                    else
+                        return
+
+                    await message.clear_reaction("🔨")
+                    await message.clear_reaction("❓")
+
                     try:
                         message = await channel.fetch_message(message.embeds[0].footer.text.split()[1])
                     except (discord.NotFound, discord.Forbidden):
@@ -1234,6 +1243,8 @@ class ModmailBot(commands.Bot):
                         thread = await self.threads.create(message.author, message=message, category=discord.utils.get(self.guild.channels, id=756528885008695377))
                     if str(reaction) == str("❓"):
                         thread = await self.threads.create(message.author, message=message, category=discord.utils.get(self.guild.channels, id=748877512968241262))
+
+                    
 
                     sent_emoji, blocked_emoji = await self.retrieve_emoji()
                     if not thread.cancelled:
