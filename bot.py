@@ -1228,7 +1228,7 @@ class ModmailBot(commands.Bot):
                     if (message.reactions["🔨"] and message.reactions["❓"]):
                         if (message.reactions["🔨"].count + message.reactions["❓"].count != 3):
                             return
-                    else
+                    else:
                         return
 
                     await message.clear_reaction("🔨")
