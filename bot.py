@@ -883,6 +883,7 @@ class ModmailBot(commands.Bot):
             open_message = await message.channel.send(embed=embed)
             await self.add_reaction(open_message, "❓")
             await self.add_reaction(open_message, "🔨")
+            return
         else:
             if self.config["dm_disabled"] == DMDisabled.ALL_THREADS:
                 embed = discord.Embed(
