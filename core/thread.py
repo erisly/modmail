@@ -143,8 +143,10 @@ class Thread:
                 embed.description = str(e)
                 embed.add_field(name="Recipient", value=recipient.mention)
 
-                if self.bot.log_channel is not None:
-                    await self.bot.log_channel.send(embed=embed)
+                if category.id == 756528885008695377:
+                    discord.utils.get(self.guild.channels, id=756528888284184616).send(embed=embed)
+                if category.id == 748877512968241262:
+                    discord.utils.get(self.guild.channels, id=748879186235752459).send(embed=embed)
                 return
 
         self._channel = channel
@@ -463,8 +465,11 @@ class Thread:
 
         tasks = [self.bot.config.update()]
 
-        if self.bot.log_channel is not None and self.channel is not None:
-            tasks.append(self.bot.log_channel.send(embed=embed))
+        if self.channel is not None:
+            if self.channel.category_id == 756528885008695377:
+                tasks.append(discord.utils.get(self.guild.channels, id=756528888284184616).send(embed=embed))
+            if self.channel.category_id == 748877512968241262:
+                tasks.append(discord.utils.get(self.guild.channels, id=748879186235752459).send(embed=embed))
 
         # Thread closed message
 

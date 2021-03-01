@@ -900,6 +900,16 @@ class ModmailBot(commands.Bot):
                 )
                 await self.add_reaction(message, blocked_emoji)
                 return await message.channel.send(embed=embed)
+        
+        if not thread.cancelled:
+            try:
+                await thread.send(message)
+            except Exception:
+                logger.error("Failed to send message:", exc_info=True)
+                await self.add_reaction(message, blocked_emoji)
+            else:
+                await self.add_reaction(message, sent_emoji)
+                self.dispatch("thread_reply", thread, False, message, False, False)
 
     async def get_contexts(self, message, *, cls=commands.Context):
         """
