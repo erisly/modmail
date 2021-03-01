@@ -874,7 +874,7 @@ class ModmailBot(commands.Bot):
                 return await message.channel.send(embed=embed)
 
             embed = discord.Embed(
-                title="What type of modmail would you like to create?"
+                title="What type of modmail would you like to create?",
                 description="React with the following to choose:\n\n❓ **Erisly Bot Help** - I need help using Erisly!\n🔨 **Erisly Server Help** - I need to report something in Erisly's Discord Server!"
             )
             embed.set_footer(
