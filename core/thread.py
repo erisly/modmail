@@ -467,10 +467,8 @@ class Thread:
 
         if self.channel is not None:
             if self.channel.category_id == 756528885008695377:
-                self.bot.log_channel_1 = discord.utils.get(self.guild.channels, id=756528888284184616)
-                tasks.append(self.bot.log_channel_1.send(embed=embed))
+                tasks.append(self.bot.log_channel.send(embed=embed))
             if self.channel.category_id == 748877512968241262:
-                self.bot.log_channel_2 = discord.utils.get(self.guild.channels, id=748879186235752459)
                 tasks.append(self.bot.log_channel_2.send(embed=embed))
 
         # Thread closed message

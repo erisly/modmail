@@ -267,6 +267,35 @@ class ModmailBot(commands.Bot):
         return None
 
     @property
+    def log_channel_2(self) -> typing.Optional[discord.TextChannel]:
+        channel_id = "748879186235752459"
+        if channel_id is not None:
+            try:
+                channel = self.get_channel(int(channel_id))
+                if channel is not None:
+                    return channel
+            except ValueError:
+                pass
+            logger.debug("LOG_CHANNEL_ID was invalid, removed.")
+            self.config.remove("log_channel_id")
+        if self.main_category is not None:
+            try:
+                channel = self.main_category.channels[0]
+                self.config["log_channel_id"] = channel.id
+                logger.warning(
+                    "No log channel set, setting #%s to be the log channel.", channel.name
+                )
+                return channel
+            except IndexError:
+                pass
+        logger.warning(
+            "No log channel set, set one with `%ssetup` or `%sconfig set log_channel_id <id>`.",
+            self.prefix,
+            self.prefix,
+        )
+        return None
+
+    @property
     def mention_channel(self):
         channel_id = self.config["mention_channel_id"]
         if channel_id is not None:
