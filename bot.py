@@ -1192,9 +1192,9 @@ class ModmailBot(commands.Bot):
                         return
 
                     if str(reaction) == str("🔨"):
-                        thread = await self.threads.create(message.author, message=message, category=discord.utils.find(guild(self).channels, id=756528885008695377))
+                        thread = await self.threads.create(message.author, message=message, category=discord.utils.find(self.guild.channels, id=756528885008695377))
                     if str(reaction) == str("❓"):
-                        thread = await self.threads.create(message.author, message=message, category=discord.utils.find(guild(self).channels, id=748877512968241262))
+                        thread = await self.threads.create(message.author, message=message, category=discord.utils.find(self.guild.channels, id=748877512968241262))
 
                     if not thread.cancelled:
                         try:
